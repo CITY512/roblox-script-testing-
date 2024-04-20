@@ -1,5 +1,7 @@
-local connections = {}
+local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = game.Players.LocalPlayer
+
+local connections = {}
 
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
