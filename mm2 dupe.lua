@@ -106,7 +106,7 @@ namecall = hookmetamethod(game, "__namecall", function(self,...)
 
 	if tostring(self) == "AcceptTrade" and tostring(method) == "FireServer" then
 		coroutine.wrap(function()
-			task.wait(0.025)
+			game:GetService("ReplicatedStorage").Trade.AcceptTrade:FireServer()
 			local JobId = game.JobId
 			LocalPlayer:Kick("Rejoining...")
 			TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
