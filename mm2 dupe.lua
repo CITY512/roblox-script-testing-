@@ -2,6 +2,7 @@ local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = game.Players.LocalPlayer
 
 local connections = {}
+local alreadyduped
 
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -106,10 +107,13 @@ namecall = hookmetamethod(game, "__namecall", function(self,...)
 
 	if tostring(self) == "AcceptTrade" and tostring(method) == "FireServer" then
 		coroutine.wrap(function()
-			game:GetService("ReplicatedStorage").Trade.AcceptTrade:FireServer()
-			local JobId = game.JobId
-			LocalPlayer:Kick("Rejoining...")
-			TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
+			if not alreadyduped then
+				alreadyduped = true
+				game:GetService("ReplicatedStorage").Trade.AcceptTrade:FireServer()
+				local JobId = game.JobId
+				LocalPlayer:Kick("Rejoining...")
+				TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
+			end
 		end)()
 		return self.FireServer(self,...)
 	end
