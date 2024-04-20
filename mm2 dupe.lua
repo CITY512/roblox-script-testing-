@@ -1,4 +1,5 @@
 local connections = {}
+local LocalPlayer = game.Players.LocalPlayer
 
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
@@ -94,4 +95,18 @@ end)
 
 connections[1] = TextButton.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
+end)
+
+local namecall
+namecall = hookmetamethod(game, "__namecall", function(self,...)
+	local args = {...}
+	local method = getnamecallmethod()
+
+	if tostring(self) == "AcceptTrade" and tostring(method) == "FireServer" then
+		local JobId = game.JobId
+		LocalPlayer:Kick("Rejoining...")
+		TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
+	end
+	
+	return namecall(self,...)
 end)
