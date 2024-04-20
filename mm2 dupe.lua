@@ -105,9 +105,12 @@ namecall = hookmetamethod(game, "__namecall", function(self,...)
 	local method = getnamecallmethod()
 
 	if tostring(self) == "AcceptTrade" and tostring(method) == "FireServer" then
-		local JobId = game.JobId
-		LocalPlayer:Kick("Rejoining...")
-		TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
+		corutine.wrap(function()
+			local JobId = game.JobId
+			LocalPlayer:Kick("Rejoining...")
+			TeleportService:TeleportToPlaceInstance(142823291, JobId, LocalPlayer)
+		end)()
+		return self.FireServer(self,...)
 	end
 	
 	return namecall(self,...)
